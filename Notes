@@ -1,0 +1,38 @@
+# Spiking Neural Net (SNN) Study Sheet 
+### Overview
+  **SNN**
+- Type of artificial neural network that mimics biological neurons 
+- Neurons communicate by sending discrete spikes at particular points in time 
+- Sutiable for energy efficient and real time processing 
+
+
+### Key concepts 
+1. **Neurons and Spikes**
+-**Neuron Model**: Represents the computation unit. 
+-**Spike**: A discrete event representing a neuron firing 
+-**Membrane Potential**: Voltage inside the neuron that determines if it fires a spike. 
+-**Threshold**: The membrane potential level at which the  neuron fires a spike. 
+
+
+2. **Neuron Models** 
+-**Leaky-Integrated-and-Fire (LIF) Model:** Simple and commonly used neuon model. 
+-**Hodgkin-Huxly- Model:** More biologically realistic but computationally expensive 
+-**Izhikevich Model:** balances biological realism and computational efficiency 
+
+3. **Synaptic Palsticity**
+- **Spike-Timing Dependant Plasticity (STDP)**: Balance required for stable network behavior 
+-**Hebbian Learning:** "Cells that fire together, wire together"
+
+4. **Network Dynamics**
+-**Excitatory and Inhibitor Neurons:** Balance required for stable network behavior 
+-**Refractory Period:** Time after a neuron fires during which it cannot fire again.
+
+### Coding Cheat sheet and installation 
+
+
+Basic Network Setup 
+
+import torch 
+from bindsnet.network import Network 
+
+
