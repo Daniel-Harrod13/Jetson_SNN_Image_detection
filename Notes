@@ -30,9 +30,72 @@
 ### Coding Cheat sheet and installation 
 
 
-Basic Network Setup 
+**Installation:**
+```sh
+pip install bindsnet
+```
 
-import torch 
-from bindsnet.network import Network 
+**Basic Network Setup:**
+```python
+import torch
+from bindsnet.network import Network
+from bindsnet.network.nodes import Input, LIFNodes
+from bindsnet.network.topology import Connection
+
+# Create a network
+network = Network()
+
+# Create layers of neurons
+input_layer = Input(n=100)
+lif_layer = LIFNodes(n=100)
+
+# Add layers to the network
+network.add_layer(input_layer, name='Input')
+network.add_layer(lif_layer, name='LIF')
+
+# Connect layers
+connection = Connection(source=input_layer, target=lif_layer, w=0.1 * torch.randn(input_layer.n, lif_layer.n))
+network.add_connection(connection, source='Input', target='LIF')
+```
+
+**Simulating the Network:**
+```python
+from bindsnet.encoding import PoissonEncoder
+from bindsnet.environment import GymEnvironment
+
+# Encode input data
+encoder = PoissonEncoder(time=100, dt=1.0)
+encoded_input = encoder.encode(torch.randn(100))
+
+# Run simulation
+network.run(inputs={'Input': encoded_input}, time=100)
+```
+
+**Spike-Timing-Dependent Plasticity (STDP):**
+```python
+from bindsnet.learning import PostPre
+
+# Add STDP rule to connection
+stdp = PostPre(connection=connection, nu=0.01)
+network.add_learning_rule(stdp, connection=connection)
+```
+
+### Tools and Libraries
+- **BindsNET:** Library for simulating SNNs using PyTorch.
+- **NEST Simulator:** Advanced tool for large-scale spiking neural network simulations.
+- **Brian2:** Flexible simulator for spiking neural networks.
+
+### Resources
+- **BindsNET Documentation:** [bindsnet-docs.readthedocs.io](https://bindsnet-docs.readthedocs.io)
+- **NEST Simulator:** [nest-simulator.org](https://www.nest-simulator.org)
+- **Brian2 Documentation:** [brian2.readthedocs.io](https://brian2.readthedocs.io)
+
+### Tips for Success
+- **Understand the biological basis of SNNs.**
+- **Start with simple models like LIF before moving to complex ones.**
+- **Leverage existing libraries and frameworks for faster development.**
+- **Experiment with different learning rules and network architectures.**
+
+
 
 
